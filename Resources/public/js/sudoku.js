@@ -60,7 +60,7 @@
         var fillPossibleValues = function ()
         {
             $('.possible-values', $grid).each(function(){
-                var cellKey = $(this).data('cellkey');
+                var cellKey = $(this).data('cell-key');
                 var possibleValues = getPossibleValuesForCell(cellKey);
                 var valuesString = '<span class="possible-value">'+possibleValues.join('</span>, <span class="possible-value">')+'</span>';
                 $(this).append(valuesString);
