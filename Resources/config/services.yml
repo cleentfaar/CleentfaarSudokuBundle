@@ -1,5 +1,5 @@
 parameters:
-#    cleentfaar_sudoku.example.class: Cleentfaar\SudokuBundle\Example
+#    cleentfaar_sudoku.example.class: Cleentfaar\Bundle\SudokuBundle\Example
 
 services:
 #    cleentfaar_sudoku.example:

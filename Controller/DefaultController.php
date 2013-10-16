@@ -7,18 +7,18 @@
  * For the full copyright and license information, please view the LICENSE file
  * that was distributed with this source code.
  */
-namespace Cleentfaar\SudokuBundle\Controller;
+namespace Cleentfaar\Bundle\SudokuBundle\Controller;
 
-use Cleentfaar\SudokuBundle\Sudoku\Grid;
-use Cleentfaar\SudokuBundle\Sudoku\GridDiff;
-use Cleentfaar\SudokuBundle\Sudoku\GridSolver;
-use Cleentfaar\SudokuBundle\Sudoku\GridStyler;
-use Cleentfaar\SudokuBundle\Sudoku\Solver;
+use Cleentfaar\Bundle\SudokuBundle\Sudoku\Grid;
+use Cleentfaar\Bundle\SudokuBundle\Sudoku\GridDiff;
+use Cleentfaar\Bundle\SudokuBundle\Sudoku\GridSolver;
+use Cleentfaar\Bundle\SudokuBundle\Sudoku\GridStyler;
+use Cleentfaar\Bundle\SudokuBundle\Sudoku\Solver;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class DefaultController
- * @package Cleentfaar\SudokuBundle\Controller
+ * @package Cleentfaar\Bundle\SudokuBundle\Controller
  */
 class DefaultController extends Controller
 {

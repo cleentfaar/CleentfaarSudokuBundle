@@ -14,20 +14,20 @@ For instructions on installing and using this bundle, see the [documentation](Re
 
 
 ## Wait, what? Sudoku?
-Yeah, so let me explain... it's obviously not meant for any production use but rather an experiment to see how efficient
-I can make an algorithm that solves any Sudoku puzzle it is given. As a sidenote: the reason for putting it in a bundle
-is merely to get more comfortable with publishing code this way; because Symfony kicks butt.
-
 The idea for this little project started from a [Numberphile video](http://www.youtube.com/watch?v=MlyTq-xVkQE) about
 Sudoku puzzles that I watched a while ago. To be clear, the puzzle itself doesn't really interest me, it's much more the
 depth of possibilities that arise from changing one single number in the puzzle, not unlike a chess game.
 I was wondering how I would go about building a program which solves the most difficult puzzle right in front of your
 eyes, if you had the time to waste that is. Just because it would look kind of neat? Yes, well... mostly.
 
+It's obviously not meant for any production use but rather an experiment to see how efficient
+I can make an algorithm that solves any Sudoku puzzle it is given. As a sidenote: the reason for putting it in a bundle
+is merely to get more comfortable with publishing code this way; because Symfony kicks butt.
+
 Another part of my interest is about the solving limit of any Sudoku puzzle, which is calculated to require a minimum of
-17 clues (check the video above). I become more and more interested to see if I could make a script that could actually
-solve such a puzzle. Bordering on the line of being unsolvable, I want to see it being solved in front of my eyes
-(or at least theoretically being able to record it).
+17 clues (check the video above). I then became more and more interested in seeing if I could make a script that could
+actually solve such a puzzle. Bordering on the line of being unsolvable, I want to be able to see it being solved in
+front of my eyes (or at least, theoretically being able to record it).
 
 I will be facing many issues with this project, probably the biggest issue being that most of the 'solving' mathemetics
 on this was eventually calculated on supercomputers by the different research groups. This may mean that I will end up

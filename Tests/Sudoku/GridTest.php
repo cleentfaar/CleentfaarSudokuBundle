@@ -7,14 +7,14 @@
  * For the full copyright and license information, please view the LICENSE file
  * that was distributed with this source code.
  */
-namespace Cleentfaar\SudokuBundle\Tests\Sudoku;
+namespace Cleentfaar\Bundle\SudokuBundle\Tests\Sudoku;
 
-use Cleentfaar\SudokuBundle\Sudoku\Grid;
+use Cleentfaar\Bundle\SudokuBundle\Sudoku\Grid;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class GridTest
- * @package Cleentfaar\SudokuBundle\Tests\Sudoku
+ * @package Cleentfaar\Bundle\SudokuBundle\Tests\Sudoku
  */
 class GridTest extends WebTestCase
 {

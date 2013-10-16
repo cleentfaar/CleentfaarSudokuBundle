@@ -7,11 +7,11 @@
  * For the full copyright and license information, please view the LICENSE file
  * that was distributed with this source code.
  */
-namespace Cleentfaar\SudokuBundle\Sudoku;
+namespace Cleentfaar\Bundle\SudokuBundle\Sudoku;
 
 /**
  * Class GridSolver
- * @package Cleentfaar\SudokuBundle\Sudoku
+ * @package Cleentfaar\Bundle\SudokuBundle\Sudoku
  */
 class GridSolver {
 
