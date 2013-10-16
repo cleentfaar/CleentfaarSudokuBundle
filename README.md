@@ -10,14 +10,16 @@ Yeah... it's obviously not meant for any production use but rather an experiment
 algorithm that solves any Sudoku puzzle you give it. The reason for putting it in a bundle is merely to get more
 comfortable with publishing code this way; because Symfony kicks butt.
 
-The idea for this little project started from a Numberphile video I watched a while ago about Sudoku puzzles.
-To be clear, the puzzle itself doesn't really interest me, it's much more the depth of possibilities that arise from
-changing one single number in the puzzle, and how one would implement such depth in a PHP implementation or Javascript.
-In a way it is much like programming a chess computer, though the variables are much clearer in the case of Sudoku.
+The idea for this little project started from a [Numberphile video](http://www.youtube.com/watch?v=MlyTq-xVkQE) I
+watched a while ago about Sudoku puzzles. To be clear, the puzzle itself doesn't really interest me, it's much more the
+depth of possibilities that arise from changing one single number in the puzzle, not unlike a chess game.
+I was wondering how I would go about building a program which solves the most difficult puzzle right in front of your
+eyes, if you had the time to waste that is.
 
 Another part of my interest is about the solving limit of any Sudoku puzzle, which is calculated to require a minimum of
-17 clues. Overtime I become more and more interested to see if I could make a script that could actually solve such a
-puzzle. Bordering on the line of being unsolvable, I want to see it being solved in front of my eyes (or at least recorded).
+17 clues (check the video above). Overtime I become more and more interested to see if I could make a script that could
+actually solve such a puzzle. Bordering on the line of being unsolvable, I want to see it being solved in front of my
+eyes (or at least recorded).
 
 I will be facing many issues with this project, probably the biggest issue being that most of the 'solving' mathemetics
 on this was eventually calculated on supercomputers by the different research groups. This may mean that I will end up
