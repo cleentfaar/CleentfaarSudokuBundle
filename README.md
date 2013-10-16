@@ -1,6 +1,10 @@
 CleentfaarSudokuBundle
 ======================
 
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/cleentfaar/CleentfaarSudokuBundle/badges/quality-score.png?s=919bc082ffe4a529394f4d90c7ee7bdd504f0b46)](https://scrutinizer-ci.com/g/cleentfaar/CleentfaarSudokuBundle/)
+[![Code Coverage](https://scrutinizer-ci.com/g/cleentfaar/CleentfaarSudokuBundle/badges/coverage.png?s=c1835c6ec78a1febecbc0ee82cd114e5c2239fd1)](https://scrutinizer-ci.com/g/cleentfaar/CleentfaarSudokuBundle/)
+[![Build Status](https://travis-ci.org/cleentfaar/CleentfaarSudokuBundle.png?branch=master)](http://travis-ci.org/cleentfaar/CleentfaarSudokuBundle)
+
 An experimental Symfony bundle which attempts to auto-solve any Sudoku puzzle that it generates.
 Currently built with both PHP and Javascript versions, to experiment with different pro's and con's
 
