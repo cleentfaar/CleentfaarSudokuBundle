@@ -66,13 +66,13 @@ class Grid
         $randomCellKeys = array_rand($this->grid, $numberOfClues);
         foreach ($randomCellKeys as $cellKey) {
             list($column, $row, $box) = explode("-", $cellKey);
-            if (!isset($allowedRowValues[$row])) {
+            if (!isset($this->allowedRowValues[$row])) {
                 $this->allowedRowValues[$row] = array(1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9);
             }
-            if (!isset($allowedColumnValues[$column])) {
+            if (!isset($this->allowedColumnValues[$column])) {
                 $this->allowedColumnValues[$column] = array(1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9);
             }
-            if (!isset($allowedBoxValues[$box])) {
+            if (!isset($this->allowedBoxValues[$box])) {
                 $this->allowedBoxValues[$box] = array(1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9);
             }
             $intersecting = array_intersect($this->allowedRowValues[$row], $this->allowedColumnValues[$column], $this->allowedBoxValues[$box]);
@@ -96,6 +96,9 @@ class Grid
      */
     public function removeRandomValues($numberOfValuesToRemove)
     {
+        var_dump($numberOfValuesToRemove);
+        var_dump($this->grid);
+        exit;
         $randomCellKeys = array_rand($this->grid, $numberOfValuesToRemove);
         if (!is_array($randomCellKeys)) {
             $randomCellKeys = array($randomCellKeys);

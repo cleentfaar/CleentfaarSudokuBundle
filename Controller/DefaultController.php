@@ -57,11 +57,10 @@ class DefaultController extends Controller
     public function generateAction($numberOfClues = 17)
     {
         $grid = new Grid();
-        $grid->removeRandomValues(81 - $numberOfClues);
 
         $styler = new GridStyler();
         $boxColors = $styler->generateBoxColors();
 
-        return $this->render('CleentfaarSudokuBundle:Default:index.html.twig',array('grid'=>$grid,'boxColors'=>$boxColors));
+        return $this->render('CleentfaarSudokuBundle:Default:index.html.twig',array('grid'=>$grid->toArray(),'boxColors'=>$boxColors));
     }
 }
