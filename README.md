@@ -9,11 +9,11 @@ An experimental Symfony bundle which attempts to auto-solve any Sudoku puzzle th
 Currently calculations are done serverside, whilst user interactions (solving and validation) are done by the client.
 
 
-### Installation & usage ###
+## Installation & usage
 For instructions on installing and using this bundle, see the [documentation](Resources/doc/index.md)
 
 
-### Wait, what? Sudoku? ###
+## Wait, what? Sudoku?
 Yeah, so let me explain... it's obviously not meant for any production use but rather an experiment to see how efficient
 I can make an algorithm that solves any Sudoku puzzle it is given. As a sidenote: the reason for putting it in a bundle
 is merely to get more comfortable with publishing code this way; because Symfony kicks butt.
@@ -25,9 +25,9 @@ I was wondering how I would go about building a program which solves the most di
 eyes, if you had the time to waste that is. Just because it would look kind of neat? Yes, well... mostly.
 
 Another part of my interest is about the solving limit of any Sudoku puzzle, which is calculated to require a minimum of
-17 clues (check the video above). Overtime I become more and more interested to see if I could make a script that could
-actually solve such a puzzle. Bordering on the line of being unsolvable, I want to see it being solved in front of my
-eyes (or at least recorded).
+17 clues (check the video above). I become more and more interested to see if I could make a script that could actually
+solve such a puzzle. Bordering on the line of being unsolvable, I want to see it being solved in front of my eyes
+(or at least theoretically being able to record it).
 
 I will be facing many issues with this project, probably the biggest issue being that most of the 'solving' mathemetics
 on this was eventually calculated on supercomputers by the different research groups. This may mean that I will end up
@@ -43,7 +43,7 @@ project to see if I can find the best solving algorithm. There are probably many
 like to face and tackle the many problems myself first.
 
 
-### Coming soon ###
+## Coming soon
 I will be improving the game's grid itself both visually and technically, this may involve adding more interface
 elements so that you can really customize the game, and also get hints on the next square to solve, or even let the
 scripts attempt to solve the puzzle themselves in front of your eyes!
