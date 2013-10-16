@@ -1,0 +1,7 @@
+parameters:
+#    cleentfaar_sudoku.example.class: Cleentfaar\SudokuBundle\Example
+
+services:
+#    cleentfaar_sudoku.example:
+#        class: %cleentfaar_sudoku.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

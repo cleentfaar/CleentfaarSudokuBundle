@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <meta content="text/html;charset=utf-8" http-equiv="content-type">
+        <meta content="{% block meta_description %}{{ block('title') }}{% endblock %}" name="description">
+        <title>{% block title %}Sudoku{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="{{ asset('bundles/cleentfaarsudoku/libs/bootstrap/css/bootstrap.min.css') }}" media="all" rel="stylesheet" type="text/css" />
+        {% endblock %}
+        <link href="{{ asset('bundles/cleentfaarsudoku/css/styles.css') }}" media="all" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-default">
+                <a class="navbar-brand" href="{{ path('cleentfaar_sudoku') }}">
+                    <i class="icon-lightbulb"></i> Cleentfaar's SudokuSolver
+                </a>
+                <a class="toggle-nav btn pull-left" href="#">
+                    <i class="icon-reorder"></i>
+                </a>
+            </nav>
+        </header>
+        <div class="container" id="content">
+            <div class="row" id="content-wrapper">
+                <div class="col-xs-12">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+            {% block footer %}
+                <footer id="footer">
+                    <div class="footer-wrapper">
+                        <div class="row">
+                            <div class="col-sm-12 text">
+                                Copyright © 2013 <a href="http://github.com/cleentfaar">cleentfaar</a> | All rights reserved
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            {% endblock %}
+        </div>
+        {% block javascripts %}
+            <script type="text/javascript" src="{{ asset('bundles/cleentfaarsudoku/libs/jquery/jquery-1.10.2.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('bundles/cleentfaarsudoku/libs/bootstrap/js/bootstrap.min.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

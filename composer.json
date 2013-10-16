@@ -1,0 +1,23 @@
+{
+    "name": "cleentfaar/sudoku-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony CleentfaarSudokuBundle",
+    "keywords": ["Sudoku"],
+    "homepage": "http://github.com/cleentfaar",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cas Leentfaar",
+            "email": "leentfaar87@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle": "~2.1"
+    },
+    "autoload": {
+        "psr-0": { "Cleentfaar\\SudokuBundle": "" }
+    },
+    "target-dir": "Cleentfaar/SudokuBundle"
+}

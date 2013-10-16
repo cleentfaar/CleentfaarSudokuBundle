@@ -1,0 +1,45 @@
+{% extends "CleentfaarSudokuBundle::layout.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/cleentfaarsudoku/libs/jquery/plugins/select2/select2.css') }}" media="all" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block content %}
+    <div id="SudokuContainer">
+        <h1>Sudoku</h1>
+        <div class="row" id="content-wrapper">
+            <div class="col-xs-9" id="SudokuGrid"></div>
+            <div class="col-xs-3 sudoku-log" id="SudokuLog"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/cleentfaarsudoku/libs/jquery/plugins/select2/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/cleentfaarsudoku/js/sudoku.js') }}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#SudokuGrid").sudoku({
+                setup: {
+                    {% for cellKey,cellValue in grid %}
+                        '{{ cellKey }}': '{{ cellValue }}'{% if loop.last is not sameas(true) %},{% endif %}
+                    {% endfor %}
+                },
+                debug: true,
+                log: '#SudokuLog',
+                systemSolvedClass: "solved",
+                userSolvedClass: "solved",
+                actions: ["solve", "generate", "zoom", "hint"],
+                startingClues: 17,
+                onSolve: function() {
+                    return alert("solved!");
+                },
+                onConflict: function(conflictingCells) {
+                    return alert("there are conflicts with the following cells: "+conflictingCells.join(','));
+                }
+            });
+            $("select").select2({
+                placeholder: '-'
+            });
+        });
+    </script>
+{% endblock %}

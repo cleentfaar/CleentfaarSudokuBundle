@@ -1,0 +1,11 @@
+cleentfaar_sudoku:
+    pattern:  /
+    defaults: { _controller: CleentfaarSudokuBundle:Default:index }
+
+cleentfaar_sudoku_solve:
+    pattern:  /solve
+    defaults: { _controller: CleentfaarSudokuBundle:Default:solve }
+
+cleentfaar_sudoku_generate:
+    pattern:  /generate/{numberOfClues}
+    defaults: { _controller: CleentfaarSudokuBundle:Default:generate }
