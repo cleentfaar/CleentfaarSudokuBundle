@@ -57,7 +57,8 @@
          * depending on the values in other cells
          * @param table
          */
-        var fillPossibleValues = function () {
+        var fillPossibleValues = function ()
+        {
             $('.possible-values', $grid).each(function(){
                 var cellKey = $(this).data('cellkey');
                 var possibleValues = getPossibleValuesForCell(cellKey);
@@ -74,11 +75,65 @@
          * @param cellKey
          * @returns {Array}
          */
-        var getPossibleValuesForCell = function (cellKey) {
-            var columnValues = getColumnValues(columnNumber);
-            var rowValues = getRowValues(rowNumber);
-            var boxValues = getBoxValues(boxNumber);
-            return [1,2,3,4,5,6,7,8,9]; // test data
+        var getPossibleValuesForCell = function (cellKey)
+        {
+            var parts = cellKey.split('-');
+            var columnValues = getValuesByClass('column-'+parts[0]);
+            var rowValues = getValuesByClass('row-'+parts[1]);
+            var boxValues = getValuesByClass('box-'+parts[2]);
+            return arrayIntersect(columnValues, rowValues, boxValues); // test data
+        }
+
+        /**
+         * @param classToFind
+         * @returns {Array}
+         */
+        var getValuesByClass = function (classToFind)
+        {
+            var values = [];
+            $("."+classToFind+" .input").each(function() {
+                if ($(this).val() > 0) {
+                    values.push($(this).val());
+                }
+            });
+            return values;
+        }
+
+        /**
+         * Finds the intersection of
+         * two arrays in a simple fashion.
+         *
+         * PARAMS
+         *  a - first array, must already be sorted
+         *  b - second array, must already be sorted
+         *
+         * NOTES
+         *
+         *  Should have O(n) operations, where n is
+         *    n = MIN(a.length(), b.length())
+         *
+         * @param a
+         * @param b
+         * @returns {Array}
+         */
+        var arrayIntersect = function (a, b)
+        {
+            var ai=0, bi=0;
+            var result = new Array();
+
+            while( ai < a.length && bi < b.length )
+            {
+                if      (a[ai] < b[bi] ){ ai++; }
+                else if (a[ai] > b[bi] ){ bi++; }
+                else /* they're equal */
+                {
+                    result.push(a[ai]);
+                    ai++;
+                    bi++;
+                }
+            }
+
+            return result;
         }
 
         /**

@@ -27,7 +27,7 @@ class DefaultControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/generate/30');
 
-        $this->assertEquals(81, $crawler->filter('.cell')->count());
+        $this->assertEquals(30, $crawler->filter('.input option[value!=\'\']:checked')->count());
     }
     public function testSolve()
     {
