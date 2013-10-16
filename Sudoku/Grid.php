@@ -16,10 +16,24 @@ namespace Cleentfaar\SudokuBundle\Sudoku;
 class Grid
 {
 
+    /**
+     * @var array|null
+     */
     private $grid = array();
 
+    /**
+     * @var array
+     */
     private $allowedColumnValues = array();
+
+    /**
+     * @var array
+     */
     private $allowedRowValues = array();
+
+    /**
+     * @var array
+     */
     private $allowedBoxValues = array();
 
     /**
@@ -28,19 +42,12 @@ class Grid
      * @param int $rowTotal
      * @param int $numberOfClues
      */
-    public function __construct($grid = null, $columnTotal = 9, $rowTotal = 9, $numberOfClues = 17) {
+    public function __construct(array $grid = null, $numberOfClues = 17, $columnTotal = 9, $rowTotal = 9) {
         if ($grid === null) {
             /**
              * Generate the grid
              */
-            $grid = array();
-            for ($rowNumber = 1; $rowNumber <= $rowTotal; $rowNumber++) {
-                for ($columnNumber = 1; $columnNumber <= $columnTotal; $columnNumber++) {
-                    $boxNumber = self::getBoxFromRowAndColumn($rowNumber, $columnNumber);
-                    $grid[$columnNumber.'-'.$rowNumber.'-'.$boxNumber] = '';
-                }
-            }
-            $this->grid = $grid;
+            $this->grid = self::generateArray($columnTotal, $rowTotal);
             $this->parseGrid($numberOfClues);
         } else {
             /**
@@ -51,6 +58,18 @@ class Grid
              */
             $this->grid = $grid;
         }
+    }
+
+    public static function generateArray($columnTotal = 9, $rowTotal = 9)
+    {
+        $grid = array();
+        for ($rowNumber = 1; $rowNumber <= $rowTotal; $rowNumber++) {
+            for ($columnNumber = 1; $columnNumber <= $columnTotal; $columnNumber++) {
+                $boxNumber = self::getBoxFromRowAndColumn($rowNumber, $columnNumber);
+                $grid[$columnNumber.'-'.$rowNumber.'-'.$boxNumber] = '';
+            }
+        }
+        return $grid;
     }
 
     /**
@@ -96,9 +115,6 @@ class Grid
      */
     public function removeRandomValues($numberOfValuesToRemove)
     {
-        var_dump($numberOfValuesToRemove);
-        var_dump($this->grid);
-        exit;
         $randomCellKeys = array_rand($this->grid, $numberOfValuesToRemove);
         if (!is_array($randomCellKeys)) {
             $randomCellKeys = array($randomCellKeys);
@@ -143,6 +159,9 @@ class Grid
         return $box;
     }
 
+    /**
+     * @return array|null
+     */
     public function toArray() {
         return $this->grid;
     }

@@ -15,10 +15,10 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
- * Class CleentfaarSudokuSolverExtension
+ * Class CleentfaarSudokuExtension
  * @package Cleentfaar\SudokuBundle\DependencyInjection
  */
-class CleentfaarSudokuSolverExtension extends Extension
+class CleentfaarSudokuExtension extends Extension
 {
     /**
      * {@inheritDoc}
