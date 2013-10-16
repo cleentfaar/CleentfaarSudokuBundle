@@ -25,16 +25,17 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/generate');
+        $crawler = $client->request('GET', '/generate/30');
 
-        $this->assertTrue($crawler->filter('html:contains("Sudoku")')->count() > 0);
+        $this->assertEquals(81, $crawler->filter('.cell')->count());
     }
     public function testSolve()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/solve');
+        $crawler = $client->request('POST', '/solve', array('grid'=>array('1-1-1'=>1)));
 
-        $this->assertTrue($crawler->filter('html:contains("Sudoku")')->count() > 0);
+        $this->assertEquals(1, $crawler->filter('html:contains(\'id="1-1-1"\')')->count());
+        $this->assertEquals(81, $crawler->filter('.cell')->count());
     }
 }

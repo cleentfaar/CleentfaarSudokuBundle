@@ -6,19 +6,23 @@ CleentfaarSudokuBundle
 [![Build Status](https://travis-ci.org/cleentfaar/CleentfaarSudokuBundle.png?branch=master)](http://travis-ci.org/cleentfaar/CleentfaarSudokuBundle)
 
 An experimental Symfony bundle which attempts to auto-solve any Sudoku puzzle that it generates.
-Currently built with both PHP and Javascript versions, to experiment with different pro's and con's
+Currently calculations are done serverside, whilst user interactions (solving and validation) are done by the client.
 
 
-### Sudoku huh? ###
-Yeah... it's obviously not meant for any production use but rather an experiment to see how efficient I can make an
-algorithm that solves any Sudoku puzzle you give it. The reason for putting it in a bundle is merely to get more
-comfortable with publishing code this way; because Symfony kicks butt.
+### Installation & usage ###
+For instructions on installing and using this bundle, see the [documentation](Resources/doc/index.md)
 
-The idea for this little project started from a [Numberphile video](http://www.youtube.com/watch?v=MlyTq-xVkQE) I
-watched a while ago about Sudoku puzzles. To be clear, the puzzle itself doesn't really interest me, it's much more the
+
+### Wait, what? Sudoku? ###
+Yeah, so let me explain... it's obviously not meant for any production use but rather an experiment to see how efficient
+I can make an algorithm that solves any Sudoku puzzle it is given. As a sidenote: the reason for putting it in a bundle
+is merely to get more comfortable with publishing code this way; because Symfony kicks butt.
+
+The idea for this little project started from a [Numberphile video](http://www.youtube.com/watch?v=MlyTq-xVkQE) about
+Sudoku puzzles that I watched a while ago. To be clear, the puzzle itself doesn't really interest me, it's much more the
 depth of possibilities that arise from changing one single number in the puzzle, not unlike a chess game.
 I was wondering how I would go about building a program which solves the most difficult puzzle right in front of your
-eyes, if you had the time to waste that is.
+eyes, if you had the time to waste that is. Just because it would look kind of neat? Yes, well... mostly.
 
 Another part of my interest is about the solving limit of any Sudoku puzzle, which is calculated to require a minimum of
 17 clues (check the video above). Overtime I become more and more interested to see if I could make a script that could
@@ -42,9 +46,9 @@ like to face and tackle the many problems myself first.
 ### Coming soon ###
 I will be improving the game's grid itself both visually and technically, this may involve adding more interface
 elements so that you can really customize the game, and also get hints on the next square to solve, or even let the
-script attempt to solve the puzzle itself!
+scripts attempt to solve the puzzle themselves in front of your eyes!
 
 The latter is the ultimate goal of this script, and an important part of it will be displaying to the user each step
-that the computer needs to take to calculate the final solution. Obviously, doing this real-time would be too fast for
-the user to see what's going on, so I will be adding a way to increase calculation speed (basically: ignoring more and
-more of the sleep-commands throughout the script).
+that the computer needs to take to calculate the final solution. Obviously, doing this real-time would often be too fast
+for the user to see what's going on, so I will be adding a way to decrease calculation speed (basically: enabling more
+and more of the sleep-commands throughout the scripts).

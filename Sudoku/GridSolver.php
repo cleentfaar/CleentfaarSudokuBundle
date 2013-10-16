@@ -10,13 +10,13 @@
 namespace Cleentfaar\SudokuBundle\Sudoku;
 
 /**
- * Class GridWalker
+ * Class GridSolver
  * @package Cleentfaar\SudokuBundle\Sudoku
  */
-class GridWalker {
+class GridSolver {
 
     /**
-     * @var array
+     * @var Grid
      */
     private $grid;
 
@@ -36,12 +36,12 @@ class GridWalker {
     private $maxAttempts = 1999;
 
     /**
-     * @param array $grid
+     * @param Grid $grid
      */
-    public function __construct(array $grid)
+    public function __construct(Grid $grid)
     {
         $this->grid = $grid;
-        $this->detectRemainingCells();
+        $this->scanCells();
         $this->solveSingleSolutionCells();
     }
 
@@ -49,7 +49,7 @@ class GridWalker {
      * @return array
      * @throws \RuntimeException
      */
-    public function solveGrid()
+    public function solve()
     {
         $this->attempt++;
         if ($this->attempt >= $this->maxAttempts) {
@@ -87,7 +87,7 @@ class GridWalker {
      * @param array $grid
      * @return array
      */
-    private function detectRemainingCells()
+    private function scanCells()
     {
         $this->remainingCells = array();
         $this->allowedRowValues = array();

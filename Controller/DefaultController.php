@@ -9,6 +9,10 @@
  */
 namespace Cleentfaar\SudokuBundle\Controller;
 
+use Cleentfaar\SudokuBundle\Sudoku\Grid;
+use Cleentfaar\SudokuBundle\Sudoku\GridDiff;
+use Cleentfaar\SudokuBundle\Sudoku\GridSolver;
+use Cleentfaar\SudokuBundle\Sudoku\GridStyler;
 use Cleentfaar\SudokuBundle\Sudoku\Solver;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -31,11 +35,18 @@ class DefaultController extends Controller
      */
     public function solveAction()
     {
-        $solver = new Solver();
-        $grid = $this->getRequest()->get('grid');
-        $solvedGrid = $solver->solve($grid);
-        $solvedCellKeys = array_diff($grid,$solvedGrid);
-        $boxColors = $solver->generateBoxColors();
+        $gridInput = $this->getRequest()->get('grid');
+        $grid = new Grid($gridInput);
+
+        $solver = new GridSolver($grid);
+        $solvedGrid = $solver->solve();
+
+        $diff = new GridDiff($grid, $solvedGrid);
+        $solvedCellKeys = $diff->getSolvedKeys();
+
+        $styler = new GridStyler();
+        $boxColors = $styler->generateBoxColors();
+
         return $this->render('CleentfaarSudokuBundle:Default:index.html.twig',array('grid'=>$solvedGrid,'solvedCellKeys'=>$solvedCellKeys,'boxColors'=>$boxColors));
     }
 
@@ -45,10 +56,12 @@ class DefaultController extends Controller
      */
     public function generateAction($numberOfClues = 17)
     {
-        $solver = new Solver();
-        $grid = $solver->generate(81, 0, 1999, 9, 9);
-        $grid = $solver->removeRandomValuesFromGrid($grid, 81 - $numberOfClues);
-        $boxColors = $solver->generateBoxColors();
+        $grid = new Grid();
+        $grid->removeRandomValues(81 - $numberOfClues);
+
+        $styler = new GridStyler();
+        $boxColors = $styler->generateBoxColors();
+
         return $this->render('CleentfaarSudokuBundle:Default:index.html.twig',array('grid'=>$grid,'boxColors'=>$boxColors));
     }
 }
