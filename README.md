@@ -6,7 +6,7 @@ CleentfaarSudokuBundle
 [![Build Status](https://travis-ci.org/cleentfaar/CleentfaarSudokuBundle.png?branch=master)](http://travis-ci.org/cleentfaar/CleentfaarSudokuBundle)
 
 An experimental Symfony bundle which attempts to auto-solve any Sudoku puzzle that it generates.
-Currently calculations are done serverside, whilst user interactions (solving and validation) are done by the client.
+Currently calculations are done serverside, whilst user interactions (manual solving and validation) are done by the client.
 
 
 ## Installation & usage

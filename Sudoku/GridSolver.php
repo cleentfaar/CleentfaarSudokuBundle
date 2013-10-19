@@ -36,13 +36,26 @@ class GridSolver {
     private $maxAttempts = 1999;
 
     /**
+     * @var array
+     */
+    private $allowedColumnValues = array();
+
+    /**
+     * @var array
+     */
+    private $allowedRowValues = array();
+
+    /**
+     * @var array
+     */
+    private $allowedBoxValues = array();
+
+    /**
      * @param Grid $grid
      */
     public function __construct(Grid $grid)
     {
         $this->grid = $grid;
-        $this->scanCells();
-        $this->solveSingleSolutionCells();
     }
 
     /**
@@ -52,10 +65,13 @@ class GridSolver {
     public function solve()
     {
         $this->attempt++;
-        if ($this->attempt >= $this->maxAttempts) {
+        if ($this->attempt == 1) {
+            $this->scanCells();
+            $this->solveSingleSolutionCells();
+        } elseif ($this->attempt >= $this->maxAttempts) {
             throw new \RuntimeException("Maximum attempts reached for solving this grid (".$this->maxAttempts.")");
         }
-        foreach ($this->remainingCells as $cellKey => $cellValue) {
+        foreach ($this->grid->getEmptyCells() as $cellKey => $cellValue) {
             list($column, $row, $box) = explode("-", $cellKey);
             $intersecting = array_intersect($this->allowedRowValues[$row],$this->allowedColumnValues[$column],$this->allowedBoxValues[$box]);
             if (count($intersecting) < 1) {

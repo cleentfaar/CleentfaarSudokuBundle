@@ -55,4 +55,40 @@ class GridTest extends WebTestCase
         $this->assertEquals($valuesToRemove, $difference);
     }
 
+
+    /**
+     * @param $row
+     * @param $column
+     * @return int
+     */
+    public function testGetBoxFromRowAndColumn() {
+        $grid = new Grid();
+
+        $row = 2;
+        $column = 2;
+        $boxShouldBe = 1;
+        $box = $grid->getBoxFromRowAndColumn($row, $column);
+        $this->assertEquals($boxShouldBe, $box);
+
+        $row = 5;
+        $column = 5;
+        $boxShouldBe = 5;
+        $box = $grid->getBoxFromRowAndColumn($row, $column);
+        $this->assertEquals($boxShouldBe, $box);
+
+        $row = 8;
+        $column = 8;
+        $boxShouldBe = 9;
+        $box = $grid->getBoxFromRowAndColumn($row, $column);
+        $this->assertEquals($boxShouldBe, $box);
+    }
+
+    public function testToArray()
+    {
+        $grid = new Grid();
+        $array = $grid->toArray();
+
+        $this->assertEquals('array', gettype($array));
+    }
+
 }

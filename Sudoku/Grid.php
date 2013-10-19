@@ -71,6 +71,25 @@ class Grid
         return $grid;
     }
 
+    public function getSolvedCells()
+    {
+        if (!isset($this->solvedCells)) {
+            return array();
+        }
+        return $this->solvedCells;
+    }
+
+    public function getEmptyCells()
+    {
+        $values = array();
+        foreach ($this->grid as $cellKey => $cellValue) {
+            if ($cellValue < 1) {
+                $values[$cellKey] = $cellValue;
+            }
+        }
+        return $values;
+    }
+
     public function getNonEmptyCells()
     {
         $values = array();
@@ -140,7 +159,7 @@ class Grid
      * @param $column
      * @return int
      */
-    private static function getBoxFromRowAndColumn($row,$column) {
+    public static function getBoxFromRowAndColumn($row,$column) {
         if ($row < 4) {
             if ($column < 4) {
                 $box = 1;

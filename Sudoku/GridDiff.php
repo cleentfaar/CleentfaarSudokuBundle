@@ -43,8 +43,8 @@ class GridDiff
      */
     public function getSolvedKeys()
     {
-        $grid1Array = $this->grid1->toArray();
-        $grid2Array = $this->grid2->toArray();
-        return array_diff($grid1Array, $grid2Array);
+        $solvedCellsGrid1 = $this->grid1->getSolvedCells();
+        $solvedCellsGrid2 = $this->grid2->getSolvedCells();
+        return array_diff($solvedCellsGrid1, $solvedCellsGrid2);
     }
 }
