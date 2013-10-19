@@ -46,4 +46,4 @@ you will need to add the bundle's routing file to your application's global rout
 Since this bundle comes with some assets like stylesheets, javascripts and some external libraries, you should also
 install the bundle's assets by executing the following command in your project:
 
-    $ php app/console assetic:dump --env=prod --no-debug
+    $ php app/console assets:install

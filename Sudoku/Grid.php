@@ -42,13 +42,12 @@ class Grid
      * @param int $rowTotal
      * @param int $numberOfClues
      */
-    public function __construct(array $grid = null, $numberOfClues = 17, $columnTotal = 9, $rowTotal = 9) {
+    public function __construct(array $grid = null, $columnTotal = 9, $rowTotal = 9) {
         if ($grid === null) {
             /**
              * Generate the grid
              */
             $this->grid = self::generateArray($columnTotal, $rowTotal);
-            $this->parseGrid($numberOfClues);
         } else {
             /**
              * Re-use a given grid, expecting it to be already properly formatted (as above)
@@ -72,12 +71,23 @@ class Grid
         return $grid;
     }
 
+    public function getNonEmptyCells()
+    {
+        $values = array();
+        foreach ($this->grid as $cellKey => $cellValue) {
+            if ($cellValue > 0) {
+                $values[$cellKey] = $cellValue;
+            }
+        }
+        return $values;
+    }
+
     /**
      * @param int $numberOfClues
      * @return mixed
      * @throws \RuntimeException
      */
-    public function parseGrid($numberOfClues = 17, $attempts = 0, $maxAttempts = 50)
+    public function addClues($numberOfClues = 17, $attempts = 0, $maxAttempts = 50)
     {
         /**
          * Distribute the indicated number of clues across the grid, taking care not to break the rules in the process
@@ -115,7 +125,7 @@ class Grid
      */
     public function removeRandomValues($numberOfValuesToRemove)
     {
-        $randomCellKeys = array_rand($this->grid, $numberOfValuesToRemove);
+        $randomCellKeys = array_rand($this->getNonEmptyCells(), $numberOfValuesToRemove);
         if (!is_array($randomCellKeys)) {
             $randomCellKeys = array($randomCellKeys);
         }

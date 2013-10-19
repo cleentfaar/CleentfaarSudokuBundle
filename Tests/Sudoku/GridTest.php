@@ -30,31 +30,25 @@ class GridTest extends WebTestCase
         $gridInput = Grid::generateArray();
         $grid = new Grid($gridInput);
         $gridArrayBefore = $grid->toArray();
-        $grid->parseGrid(17);
+        $grid->addClues(17);
         $gridArrayAfter = $grid->toArray();
-
-        $difference = array_diff($gridArrayBefore, $gridArrayAfter);
-        $this->assertTrue(count($difference) > 0);
+        $differences = 0;
+        foreach ($gridArrayBefore as $cellKey => $cellValue) {
+            if ($gridArrayAfter[$cellKey] != $cellValue) {
+                $differences++;
+            }
+        }
+        $this->assertEquals(17, $differences);
     }
 
     public function testRemoveRandomValues()
     {
-        $gridInput = Grid::generateArray();
-        $grid = new Grid($gridInput, 81);
+        $grid = new Grid();
+        $grid->addClues(17);
         $valuesToRemove = 17;
-        $valuesBefore = 0;
-        $valuesAfter = 0;
-        foreach ($gridInput as $key => $value) {
-            if ($value > 0) {
-                $valuesBefore++;
-            }
-        }
+        $valuesBefore = count($grid->getNonEmptyCells());
         $grid->removeRandomValues($valuesToRemove);
-        foreach ($grid->toArray() as $key => $value) {
-            if ($value > 0) {
-                $valuesAfter++;
-            }
-        }
+        $valuesAfter = count($grid->getNonEmptyCells());
         $difference = $valuesBefore - $valuesAfter;
         $this->assertEquals($valuesToRemove, $difference);
     }
