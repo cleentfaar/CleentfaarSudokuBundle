@@ -8,4 +8,4 @@ cleentfaar_sudoku_solve:
 
 cleentfaar_sudoku_generate:
     pattern:  /generate/{numberOfClues}
-    defaults: { _controller: CleentfaarSudokuBundle:Default:generate }
+    defaults: { _controller: CleentfaarSudokuBundle:Default:generate, numberOfClues: 17 }

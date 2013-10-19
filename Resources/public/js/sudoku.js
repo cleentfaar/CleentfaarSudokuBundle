@@ -26,6 +26,8 @@
             setup: {},
             debug: false,
             log: null,
+            onCreateActionUrl: null,
+            actionsContainer: "#SudokuActions",
             actions: ["solve", "generate", "hint", "zoom"],
             startingClues: 40
         }
@@ -39,17 +41,50 @@
             clearLog();
             if (plugin.settings.debug == true) {
                 writeLog('Initiating grid...');
-                writeLog('&nbsp;');
             }
             $grid = generateTable();
             $element.html($grid);
             fillPossibleValues();
+            createActions();
             bindTriggers();
             checkGrid();
             if (plugin.settings.debug == true) {
-                writeLog('&nbsp;');
                 writeLog('Successfully initiated grid!');
             }
+        }
+
+        var createActions = function ()
+        {
+            var $actionsContainer = $(plugin.settings.actionsContainer);
+            if ($actionsContainer.length !== 1) {
+                writeLog("Action container does not exist, creating one after the base element");
+                $actionsContainer = $('<div id="'+plugin.settings.actionsContainer+'"></div>');
+                $element.after($actionsContainer);
+            }
+            for (var x = 0; x < plugin.settings.actions.length; x++){
+                var action = plugin.settings.actions[x];
+                createAction($actionsContainer, action);
+            }
+        }
+
+        var getUrlForAction = function (action)
+        {
+            if (plugin.settings.onCreateActionUrl) {
+                return plugin.settings.onCreateActionUrl(action);
+            }
+            return "/sudoku/"+action;
+        }
+
+        var createAction = function ($containerElement, action)
+        {
+            if (plugin.settings.onCreateAction) {
+                plugin.settings.onCreateAction($containerElement, action);
+            } else {
+                var actionUrl = getUrlForAction(action);
+                var actionHtml = '<a class="btn" href="'+actionUrl+'">'+action+'</a>';
+                $containerElement.append(actionHtml);
+            }
+            writeLog("Created action with name "+action);
         }
 
         /**
@@ -168,7 +203,7 @@
                 $(plugin.settings.log).append('<div class="entry">'+message+'</div>');
                 $(plugin.settings.log)[0].scrollTop = $(plugin.settings.log)[0].scrollHeight;
             } else {
-                console.writeLog(message);
+                console.log(message);
             }
         }
 

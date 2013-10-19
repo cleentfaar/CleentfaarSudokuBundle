@@ -59,7 +59,7 @@ class GridSolver {
     }
 
     /**
-     * @return array
+     * @return Grid
      * @throws \RuntimeException
      */
     public function solve()
@@ -85,7 +85,7 @@ class GridSolver {
             }
             $this->solutions[$cellKey] = $intersecting;
             $allowedValue = array_rand($intersecting,1);
-            $this->grid[$cellKey] = $allowedValue;
+            $this->grid->set($cellKey, $allowedValue);
             unset($this->allowedRowValues[$row][$allowedValue]);
             unset($this->allowedColumnValues[$column][$allowedValue]);
             unset($this->allowedBoxValues[$box][$allowedValue]);
@@ -99,9 +99,6 @@ class GridSolver {
      *
      * At the same time detect the values that have been used already, so that we know which possibilities
      * we have for the remaining empty cells
-     *
-     * @param array $grid
-     * @return array
      */
     private function scanCells()
     {
@@ -109,7 +106,7 @@ class GridSolver {
         $this->allowedRowValues = array();
         $this->allowedColumnValues = array();
         $this->allowedBoxValues = array();
-        foreach ($this->grid as $cellKey => $value) {
+        foreach ($this->grid->getAllCells() as $cellKey => $value) {
             list($column, $row, $box) = explode("-", $cellKey);
             if (!isset($this->allowedRowValues[$row])) {
                 $this->allowedRowValues[$row] = array(1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9);
@@ -131,14 +128,9 @@ class GridSolver {
     }
 
     /**
-     * First, we fill in the empty cells that only have one possible value left,
+     * Here we fill in the empty cells that only have one possible value left,
      * making it easier (faster) to determine the other cells
      *
-     * @param array $remainingCells
-     * @param $allowedRowValues
-     * @param $allowedColumnValues
-     * @param $allowedBoxValues
-     * @return array
      * @throws \RuntimeException
      */
     private function solveSingleSolutionCells()

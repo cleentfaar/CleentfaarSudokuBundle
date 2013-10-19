@@ -71,6 +71,16 @@ class Grid
         return $grid;
     }
 
+    public function get($cellKey)
+    {
+        return isset($this->grid[$cellKey]) ? $this->grid[$cellKey] : null;
+    }
+
+    public function set($cellKey, $cellValue)
+    {
+        $this->grid[$cellKey] = $cellValue;
+    }
+
     public function getSolvedCells()
     {
         if (!isset($this->solvedCells)) {
@@ -88,6 +98,11 @@ class Grid
             }
         }
         return $values;
+    }
+
+    public function getAllCells()
+    {
+        return $this->grid;
     }
 
     public function getNonEmptyCells()
@@ -128,7 +143,7 @@ class Grid
                 if ($attempts >= $maxAttempts) {
                     throw new \RuntimeException("Maximum amount of attempts reached before giving up (number of clues: $numberOfClues)");
                 }
-                return $this->parseGrid($numberOfClues, $attempts + 1, $maxAttempts);
+                return $this->addClues($numberOfClues, $attempts + 1, $maxAttempts);
             }
             $randomValue = array_rand($intersecting,1);
             unset($this->allowedRowValues[$row][$randomValue]);

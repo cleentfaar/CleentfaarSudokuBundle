@@ -42,7 +42,7 @@ class DefaultController extends Controller
         $solvedGrid = $solver->solve();
 
         $diff = new GridDiff($grid, $solvedGrid);
-        $solvedCellKeys = $diff->getSolvedKeys();
+        $solvedCellKeys = $diff->getChangedValues();
 
         $styler = new GridStyler();
         $boxColors = $styler->generateBoxColors();
@@ -54,9 +54,10 @@ class DefaultController extends Controller
      * @param int $numberOfClues
      * @return mixed
      */
-    public function generateAction($numberOfClues = 17)
+    public function generateAction($numberOfClues)
     {
         $grid = new Grid();
+        $grid->addClues($numberOfClues);
 
         $styler = new GridStyler();
         $boxColors = $styler->generateBoxColors();

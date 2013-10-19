@@ -41,10 +41,16 @@ class GridDiff
     /**
      * @return array
      */
-    public function getSolvedKeys()
+    public function getChangedValues()
     {
-        $solvedCellsGrid1 = $this->grid1->getSolvedCells();
-        $solvedCellsGrid2 = $this->grid2->getSolvedCells();
-        return array_diff($solvedCellsGrid1, $solvedCellsGrid2);
+        $filledCellsGrid1 = $this->grid1->getNonEmptyCells();
+        $filledCellsGrid2 = $this->grid2->getNonEmptyCells();
+        $changedValues = array();
+        foreach ($filledCellsGrid1 as $cellKey => $cellValue) {
+            if ($cellValue != $filledCellsGrid2[$cellKey]) {
+                $changedValues[$cellKey] = $filledCellsGrid2[$cellValue];
+            }
+        }
+        return $changedValues;
     }
 }

@@ -22,10 +22,11 @@ class AppKernel extends Kernel
     {
         $bundles = array(
             // Dependencies
-            new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
-            new \Symfony\Bundle\TwigBundle\TwigBundle(),
-            new \Cleentfaar\Bundle\SudokuBundle\CleentfaarSudokuBundle(),
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new Cleentfaar\Bundle\SudokuBundle\CleentfaarSudokuBundle(),
+            new HappyR\Select2Bundle\HappyRSelect2Bundle(),
         );
 
         return $bundles;

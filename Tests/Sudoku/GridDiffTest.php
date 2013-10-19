@@ -26,7 +26,7 @@ class GridDiffTest extends WebTestCase
         $grid2->addClues(17);
 
         $gridDiff = new GridDiff($grid1, $grid2);
-        $solvedKeys = count($gridDiff->getSolvedKeys());
+        $solvedKeys = count($gridDiff->getChangedValues());
 
         $this->assertEquals(17, $solvedKeys);
     }

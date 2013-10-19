@@ -22,6 +22,7 @@ class GridSolverTest extends WebTestCase
     public function testSolve()
     {
         $grid = new Grid();
+        $grid->addClues(60);
         $gridSolver = new GridSolver($grid);
         $solvedGrid = $gridSolver->solve();
         $this->assertTrue($solvedGrid instanceof Grid);

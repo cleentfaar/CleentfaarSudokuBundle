@@ -1,20 +1,26 @@
 {% extends "CleentfaarSudokuBundle::layout.html.twig" %}
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('bundles/cleentfaarsudoku/libs/jquery/plugins/select2/select2.css') }}" media="all" rel="stylesheet" type="text/css" />
+    {% stylesheets './bundles/happyrselect2/css/select2.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 {% endblock %}
 {% block content %}
     <div id="SudokuContainer">
-        <h1>Sudoku</h1>
         <div class="row" id="content-wrapper">
-            <div class="col-xs-9" id="SudokuGrid"></div>
-            <div class="col-xs-3 sudoku-log" id="SudokuLog"></div>
+            <div class="col-xs-12" id="SudokuGrid"></div>
         </div>
     </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/cleentfaarsudoku/libs/jquery/plugins/select2/select2.min.js') }}"></script>
+    {% javascripts
+    '@HappyRSelect2Bundle/Resources/public/js/select2.min.js'
+    // Include the localization file you need
+    '@HappyRSelect2Bundle/Resources/public/js/select2_locale_nl.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
     <script type="text/javascript" src="{{ asset('bundles/cleentfaarsudoku/js/sudoku.js') }}"></script>
     <script type="text/javascript">
         $(function() {
@@ -25,15 +31,24 @@
                     {% endfor %}
                 },
                 debug: true,
-                log: '#SudokuLog',
-                systemSolvedClass: "solved",
-                userSolvedClass: "solved",
+                autoSolvedClass: "solved",
+                manualSolvedClass: "solved",
                 actions: ["solve", "generate", "zoom", "hint"],
                 startingClues: 17,
-                onSolve: function() {
+                onCreateActionUrl: function(action) {
+                    switch (action) {
+                        case 'generate':
+                            return '{{ path('cleentfaar_sudoku_generate') }}' + $('#');
+                            break;
+                        default:
+                            return '#';
+                            break;
+                    }
+                },
+                onCellSolve: function($cell) {
                     return alert("solved!");
                 },
-                onConflict: function(conflictingCells) {
+                onCellConflicts: function(conflictingCells) {
                     return alert("there are conflicts with the following cells: "+conflictingCells.join(','));
                 }
             });
