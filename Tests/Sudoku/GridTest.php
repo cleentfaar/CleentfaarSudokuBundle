@@ -19,14 +19,16 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class GridTest extends WebTestCase
 {
 
-    public function testConstruct() {
+    public function testConstruct()
+    {
         $grid = new Grid();
         $gridArray = $grid->toArray();
 
         $this->assertEquals(81, count($gridArray));
     }
 
-    public function testParseGrid() {
+    public function testParseGrid()
+    {
         $gridInput = Grid::generateArray();
         $grid = new Grid($gridInput);
         $gridArrayBefore = $grid->toArray();
