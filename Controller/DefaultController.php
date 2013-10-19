@@ -54,7 +54,7 @@ class DefaultController extends Controller
      * @param int $numberOfClues
      * @return mixed
      */
-    public function generateAction($numberOfClues)
+    public function generateAction($numberOfClues = 17)
     {
         $grid = new Grid();
         $grid->addClues($numberOfClues);

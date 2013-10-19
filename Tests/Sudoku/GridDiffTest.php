@@ -19,15 +19,15 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class GridDiffTest extends WebTestCase
 {
-    public function testGetSolvedKeys()
+    public function testGetChangedValues()
     {
         $grid1 = new Grid();
         $grid2 = new Grid();
         $grid2->addClues(17);
 
         $gridDiff = new GridDiff($grid1, $grid2);
-        $solvedKeys = count($gridDiff->getChangedValues());
-
-        $this->assertEquals(17, $solvedKeys);
+        $changedValues = $gridDiff->getChangedValues();
+        var_dump($changedValues);
+        $this->assertEquals(17, count($changedValues));
     }
 }

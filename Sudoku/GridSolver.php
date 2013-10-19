@@ -145,7 +145,7 @@ class GridSolver {
                 throw new \RuntimeException("No more possibilities available for cell $cellKey");
             } elseif (count($intersecting) == 1) {
                 $allowedValue = array_rand($intersecting,1);
-                $this->grid[$cellKey] = $allowedValue;
+                $this->grid->set($cellKey, $allowedValue);
                 unset($this->allowedRowValues[$row][$allowedValue]);
                 unset($this->allowedColumnValues[$column][$allowedValue]);
                 unset($this->allowedBoxValues[$box][$allowedValue]);

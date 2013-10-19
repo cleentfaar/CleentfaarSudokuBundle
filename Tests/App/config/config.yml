@@ -9,3 +9,7 @@ framework:
     templating:       { engines: ['twig'] }
     session:
         storage_id: session.storage.filesystem
+
+assetic:
+    filters:
+        cssrewrite: ~

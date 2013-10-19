@@ -58,7 +58,7 @@
             var $actionsContainer = $(plugin.settings.actionsContainer);
             if ($actionsContainer.length !== 1) {
                 writeLog("Action container does not exist, creating one after the base element");
-                $actionsContainer = $('<div id="'+plugin.settings.actionsContainer+'"></div>');
+                $actionsContainer = $('<div id="'+plugin.settings.actionsContainer+'" class="sudoku-actions"></div>');
                 $element.after($actionsContainer);
             }
             for (var x = 0; x < plugin.settings.actions.length; x++){

@@ -99,6 +99,9 @@
     background:none;
     border:none;
 }
+.sudoku-actions {
+    margin:auto;
+}
 .sudoku-log {
     overflow-y: scroll;
     height:100%;
