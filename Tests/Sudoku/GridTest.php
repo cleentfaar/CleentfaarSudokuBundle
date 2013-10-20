@@ -10,6 +10,7 @@
 namespace Cleentfaar\Bundle\SudokuBundle\Tests\Sudoku;
 
 use Cleentfaar\Bundle\SudokuBundle\Sudoku\Grid;
+use Cleentfaar\Bundle\SudokuBundle\Sudoku\GridGenerator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -25,22 +26,6 @@ class GridTest extends WebTestCase
         $gridArray = $grid->toArray();
 
         $this->assertEquals(81, count($gridArray));
-    }
-
-    public function testParseGrid()
-    {
-        $gridInput = Grid::generateArray();
-        $grid = new Grid($gridInput);
-        $gridArrayBefore = $grid->toArray();
-        $grid->addClues(17);
-        $gridArrayAfter = $grid->toArray();
-        $differences = 0;
-        foreach ($gridArrayBefore as $cellKey => $cellValue) {
-            if ($gridArrayAfter[$cellKey] != $cellValue) {
-                $differences++;
-            }
-        }
-        $this->assertEquals(17, $differences);
     }
 
     public function testRemoveRandomValues()
@@ -67,19 +52,19 @@ class GridTest extends WebTestCase
         $row = 2;
         $column = 2;
         $boxShouldBe = 1;
-        $box = $grid->getBoxFromRowAndColumn($row, $column);
+        $box = GridGenerator::getBoxFromRowAndColumn($row, $column);
         $this->assertEquals($boxShouldBe, $box);
 
         $row = 5;
         $column = 5;
         $boxShouldBe = 5;
-        $box = $grid->getBoxFromRowAndColumn($row, $column);
+        $box = GridGenerator::getBoxFromRowAndColumn($row, $column);
         $this->assertEquals($boxShouldBe, $box);
 
         $row = 8;
         $column = 8;
         $boxShouldBe = 9;
-        $box = $grid->getBoxFromRowAndColumn($row, $column);
+        $box = GridGenerator::getBoxFromRowAndColumn($row, $column);
         $this->assertEquals($boxShouldBe, $box);
     }
 

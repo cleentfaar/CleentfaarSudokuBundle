@@ -113,24 +113,36 @@
         var getPossibleValuesForCell = function (cellKey)
         {
             var parts = cellKey.split('-');
-            var columnValues = getValuesByClass('column-'+parts[0]);
-            var rowValues = getValuesByClass('row-'+parts[1]);
-            var boxValues = getValuesByClass('box-'+parts[2]);
-            return arrayIntersect(columnValues, rowValues, boxValues); // test data
+            var columnValues = getValuesBySelector('.column-'+parts[0]+' .input');
+            var rowValues = getValuesBySelector('.row-'+parts[1]+' .input');
+            var boxValues = getValuesBySelector('.box-'+parts[2]+' .input');
+            var possibleValues = [];
+            for (var x = 1; x <= 9; x++) {
+                if ($.inArray(x,columnValues) === -1 &&
+                    $.inArray(x,rowValues) === -1 &&
+                    $.inArray(x,boxValues) === -1) {
+                    possibleValues.push(x);
+                }
+            }
+            //writeLog("Possible values for cellkey "+cellKey+": ");
+            //writeLog(possibleValues);
+            return possibleValues;
         }
 
         /**
-         * @param classToFind
+         * @param selector
          * @returns {Array}
          */
-        var getValuesByClass = function (classToFind)
+        var getValuesBySelector = function (selector)
         {
             var values = [];
-            $("."+classToFind+" .input").each(function() {
+            $(selector).each(function() {
                 if ($(this).val() > 0) {
                     values.push($(this).val());
                 }
             });
+            writeLog("Used values for selector "+selector+": ");
+            writeLog(values);
             return values;
         }
 
@@ -373,7 +385,7 @@
             if (plugin.settings.setup[cellKey] !== undefined) {
                 value = plugin.settings.setup[cellKey];
             }
-            var cellInput = '<select name="'+cellKey+'" id="'+cellKey+'" id="'+cellKey+'" class="input">';
+            var cellInput = '<select name="grid['+cellKey+']" id="'+cellKey+'" id="'+cellKey+'" class="input">';
             cellInput += '<option value=""></option>';
             for (var x = 1; x <= 9; x++) {
                 cellInput += '<option value="'+x+'"'+(value == x ? ' selected="selected"' : '')+'>'+x+'</option>';

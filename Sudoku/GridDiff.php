@@ -43,12 +43,12 @@ class GridDiff
      */
     public function getChangedValues()
     {
-        $filledCellsGrid1 = $this->grid1->getNonEmptyCells();
-        $filledCellsGrid2 = $this->grid2->getNonEmptyCells();
+        $cellsGrid1 = $this->grid1->getAllCells();
+        $cellsGrid2 = $this->grid2->getAllCells();
         $changedValues = array();
-        foreach ($filledCellsGrid1 as $cellKey => $cellValue) {
-            if ($cellValue != $filledCellsGrid2[$cellKey]) {
-                $changedValues[$cellKey] = $filledCellsGrid2[$cellValue];
+        foreach ($cellsGrid1 as $cellKey => $cellValue) {
+            if ($cellValue != $cellsGrid2[$cellKey]) {
+                $changedValues[$cellKey] = $cellsGrid2[$cellKey];
             }
         }
         return $changedValues;

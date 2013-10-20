@@ -8,7 +8,18 @@
 {% block content %}
     <div id="SudokuContainer">
         <div class="row" id="content-wrapper">
-            <div class="col-xs-12" id="SudokuGrid"></div>
+            <form action="{{ path('cleentfaar_sudoku_solve') }}" method="post" id="SudokuForm">
+                <div class="col-xs-12" id="SudokuGrid"></div>
+                <div class="sudoku-actions">
+                    <a class="btn sudoku-action" id="GenerateGrid" href="{{ path('cleentfaar_sudoku_generate') }}/">{{ 'Generate new grid'|trans() }}</a>
+                    <select name="number_of_clues" id="NumberOfClues">
+                    {% for clue in 17..80 %}
+                        <option value="{{ clue }}">{{ clue }}</option>
+                    {% endfor %}
+                    </select>
+                    <button type="submit" class="btn sudoku-action">{{ 'Solve this grid'|trans() }}</button>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}
@@ -16,7 +27,6 @@
     {{ parent() }}
     {% javascripts
     '@HappyRSelect2Bundle/Resources/public/js/select2.min.js'
-    '@HappyRSelect2Bundle/Resources/public/js/select2_locale_nl.js'
     '@CleentfaarSudokuBundle/Resources/public/js/sudoku.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
@@ -29,28 +39,14 @@
                         '{{ cellKey }}': '{{ cellValue }}'{% if loop.last is not sameas(true) %},{% endif %}
                     {% endfor %}
                 },
-                debug: true,
-                autoSolvedClass: "solved",
-                manualSolvedClass: "solved",
-                actions: ["solve", "generate", "zoom", "hint"],
-                startingClues: 17,
-                onCreateActionUrl: function(action) {
-                    switch (action) {
-                        case 'generate':
-                            return '{{ path('cleentfaar_sudoku_generate') }}' + $('#');
-                            break;
-                        default:
-                            return '#';
-                            break;
-                    }
-                },
-                onCellSolve: function($cell) {
-                    return alert("solved!");
-                },
-                onCellConflicts: function(conflictingCells) {
-                    return alert("there are conflicts with the following cells: "+conflictingCells.join(','));
-                }
+                debug: true
             });
+            $("#GenerateGrid").click(function(e){
+                e.preventDefault();
+                var url = $(this).attr('href') + $("#NumberOfClues").val();
+                window.location.href = url;
+                return;
+            })
             $("select").select2({
                 placeholder: '-'
             });

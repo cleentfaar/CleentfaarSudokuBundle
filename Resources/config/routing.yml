@@ -1,11 +1,14 @@
 cleentfaar_sudoku:
     pattern:  /
     defaults: { _controller: CleentfaarSudokuBundle:Default:index }
+    methods:  [GET]
 
 cleentfaar_sudoku_solve:
     pattern:  /solve
     defaults: { _controller: CleentfaarSudokuBundle:Default:solve }
+    methods:  [POST]
 
 cleentfaar_sudoku_generate:
     pattern:  /generate/{numberOfClues}
     defaults: { _controller: CleentfaarSudokuBundle:Default:generate, numberOfClues: 17 }
+    methods:  [GET]

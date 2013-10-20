@@ -13,3 +13,5 @@ framework:
 assetic:
     filters:
         cssrewrite: ~
+    variables:
+        locale: [ar,ca,cs,da,de,el,es,et,eu,fi,fr,gl,he,hr,hu,id,is,it,ja,ko,lt,lv,mk,nl,no,pl,pt-BR,pt-PT,ro,ru,sk,sv,tr,ua,vi,zh-CN,zh-TW]

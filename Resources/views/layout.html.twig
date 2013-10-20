@@ -7,9 +7,13 @@
         <meta content="{% block meta_description %}{{ block('title') }}{% endblock %}" name="description">
         <title>{% block title %}Sudoku{% endblock %}</title>
         {% block stylesheets %}
-            <link href="{{ asset('bundles/cleentfaarsudoku/libs/bootstrap/css/bootstrap.min.css') }}" media="all" rel="stylesheet" type="text/css" />
+            {% stylesheets 'bundles/cleentfaarsudoku/libs/bootstrap/css/bootstrap.min.css' filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
         {% endblock %}
-        <link href="{{ asset('bundles/cleentfaarsudoku/css/styles.css') }}" media="all" rel="stylesheet" type="text/css" />
+        {% stylesheets 'bundles/cleentfaarsudoku/css/styles.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
     </head>
     <body>
         <header>
@@ -41,8 +45,12 @@
             {% endblock %}
         </div>
         {% block javascripts %}
-            <script type="text/javascript" src="{{ asset('bundles/cleentfaarsudoku/libs/jquery/jquery-1.10.2.min.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('bundles/cleentfaarsudoku/libs/bootstrap/js/bootstrap.min.js') }}"></script>
+            {% javascripts
+            '@CleentfaarSudokuBundle/Resources/public/libs/jquery/jquery-1.10.2.min.js'
+            '@CleentfaarSudokuBundle/Resources/public/libs/bootstrap/js/bootstrap.min.js'
+            %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
         {% endblock %}
     </body>
 </html>

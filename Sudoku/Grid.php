@@ -24,63 +24,76 @@ class Grid
     /**
      * @var array
      */
-    private $allowedColumnValues = array();
+    private $allowedColumnValues;
 
     /**
      * @var array
      */
-    private $allowedRowValues = array();
+    private $allowedRowValues;
 
     /**
      * @var array
      */
-    private $allowedBoxValues = array();
+    private $allowedBoxValues;
 
     /**
      * @param null $grid
-     * @param int $columnTotal
-     * @param int $rowTotal
-     * @param int $numberOfClues
      */
-    public function __construct(array $grid = null, $columnTotal = 9, $rowTotal = 9) {
+    public function __construct(array $grid = null) {
         if ($grid === null) {
             /**
              * Generate the grid
              */
-            $this->grid = self::generateArray($columnTotal, $rowTotal);
-        } else {
-            /**
-             * Re-use a given grid, expecting it to be already properly formatted (as above)
-             * In most cases, this will be the input array as send by the user, containing the same formatting as above
-             * It is therefore important to keep the same naming/values in the actual HTML-elements, e.g.:
-             *      <select name="1-2-3">...<option selected="selectes" value="4">4</option>...</select>
-             */
-            $this->grid = $grid;
+            $grid = GridGenerator::generate()->toArray();
         }
+        $this->grid = $grid;
+        $this->detectAllowedValues();
     }
 
-    public static function generateArray($columnTotal = 9, $rowTotal = 9)
+    /**
+     *
+     */
+    private function detectAllowedValues()
     {
-        $grid = array();
-        for ($rowNumber = 1; $rowNumber <= $rowTotal; $rowNumber++) {
-            for ($columnNumber = 1; $columnNumber <= $columnTotal; $columnNumber++) {
-                $boxNumber = self::getBoxFromRowAndColumn($rowNumber, $columnNumber);
-                $grid[$columnNumber.'-'.$rowNumber.'-'.$boxNumber] = '';
+        foreach ($this->grid as $cellKey => $cellValue) {
+            list($column, $row, $box) = $this->getPositionFromCellKey($cellKey);
+            if (count($this->getAllowedColumnValues($column)) < 1) {
+                $this->setAllowedColumnValues($column, array(1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9));
+            }
+            if (count($this->getAllowedRowValues($row)) < 1) {
+                $this->setAllowedRowValues($row, array(1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9));
+            }
+            if (count($this->getAllowedBoxValues($box)) < 1) {
+               $this->setAllowedBoxValues($box, array(1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9));
             }
         }
-        return $grid;
     }
 
+    /**
+     * @param $cellKey
+     * @return null
+     */
     public function get($cellKey)
     {
         return isset($this->grid[$cellKey]) ? $this->grid[$cellKey] : null;
     }
 
+    /**
+     * @param $cellKey
+     * @param $cellValue
+     */
     public function set($cellKey, $cellValue)
     {
         $this->grid[$cellKey] = $cellValue;
+        list($column, $row, $box) = $this->getPositionFromCellKey($cellKey);
+        $this->removeAllowedColumnValue($column, $cellValue);
+        $this->removeAllowedRowValue($row, $cellValue);
+        $this->removeAllowedBoxValue($box, $cellValue);
     }
 
+    /**
+     * @return array
+     */
     public function getSolvedCells()
     {
         if (!isset($this->solvedCells)) {
@@ -89,7 +102,146 @@ class Grid
         return $this->solvedCells;
     }
 
-    public function getEmptyCells()
+    /**
+     * @param $column
+     * @return array
+     */
+    public function getAllowedColumnValues($column)
+    {
+        return isset($this->allowedColumnValues[$column]) ? $this->allowedColumnValues[$column] : array();
+    }
+
+    /**
+     * @param $row
+     * @return array
+     */
+    public function getAllowedRowValues($row)
+    {
+        return isset($this->allowedRowValues[$row]) ? $this->allowedRowValues[$row] : array();
+    }
+
+    /**
+     * @param $box
+     * @return array
+     */
+    public function getAllowedBoxValues($box)
+    {
+        return isset($this->allowedBoxValues[$box]) ? $this->allowedBoxValues[$box] : array();
+    }
+
+    /**
+     * @param $column
+     * @param array $values
+     */
+    public function setAllowedColumnValues($column, array $values)
+    {
+        $this->allowedColumnValues[$column] = $values;
+    }
+
+    /**
+     * @param $row
+     * @param array $values
+     */
+    public function setAllowedRowValues($row, array $values)
+    {
+        $this->allowedRowValues[$row] = $values;
+    }
+
+    /**
+     * @param $box
+     * @param array $values
+     */
+    public function setAllowedBoxValues($box, array $values)
+    {
+        $this->allowedBoxValues[$box] = $values;
+    }
+
+    /**
+     * @param $column
+     * @param $value
+     */
+    public function removeAllowedColumnValue($column, $value)
+    {
+        if (isset($this->allowedColumnValues[$column][$value])) {
+            unset($this->allowedColumnValues[$column][$value]);
+        }
+    }
+
+    /**
+     * @param $row
+     * @param $value
+     */
+    public function removeAllowedRowValue($row, $value)
+    {
+        if (isset($this->allowedRowValues[$row][$value])) {
+            unset($this->allowedRowValues[$row][$value]);
+        }
+    }
+
+    /**
+     * @param $box
+     * @param $value
+     */
+    public function removeAllowedBoxValue($box, $value)
+    {
+        if (isset($this->allowedBoxValues[$box][$value])) {
+            unset($this->allowedBoxValues[$box][$value]);
+        }
+    }
+
+    /**
+     * @param $cellKey
+     * @return array
+     * @throws \Exception
+     */
+    public function getPositionFromCellKey($cellKey)
+    {
+        $parts = explode("-", $cellKey);
+        if (count($parts) !== 3) {
+            throw new \Exception("Expected 3 parts to come from cellkey $cellKey, only got ".count($parts));
+        }
+        return $parts;
+    }
+
+    /**
+     * @param $value1
+     * @param $value2
+     * @return array
+     */
+    private function comparePossibleValues($value1, $value2)
+    {
+        list($column1, $row1, $box1) = $this->getPositionFromCellKey($value1);
+        list($column2, $row2, $box2) = $this->getPositionFromCellKey($value2);
+        $allowedValues1 = array_intersect($this->getAllowedColumnValues($column1), $this->getAllowedRowValues($row1), $this->getAllowedBoxValues($box1));
+        $allowedValues2 = array_intersect($this->getAllowedColumnValues($column2), $this->getAllowedRowValues($row2), $this->getAllowedBoxValues($box2));
+        if (count($allowedValues1) > count($allowedValues2)) {
+            return $allowedValues2;
+        } else {
+            return $allowedValues1;
+        }
+    }
+
+    /**
+     * @param bool $sortByNumberOfValues
+     * @return array
+     */
+    public function getCellSolutions($sortByNumberOfValues = false)
+    {
+        $grid = $this->grid;
+        $solutions = array();
+        uksort($grid, array($this, "comparePossibleValues"));
+        foreach ($grid as $cellKey => $cellValue) {
+            list($column, $row, $box) = $this->getPositionFromCellKey($cellKey);
+            $solutions[$cellKey] = array_intersect($this->getAllowedColumnValues($column), $this->getAllowedRowValues($row), $this->getAllowedBoxValues($box));
+        }
+        return $solutions;
+    }
+
+    /**
+     * @param bool $sortByNumberOfPossibleValues
+     * @return array
+     */
+    public function getEmptyCells($sortByNumberOfPossibleValues = false)
     {
         $values = array();
         foreach ($this->grid as $cellKey => $cellValue) {
@@ -100,11 +252,17 @@ class Grid
         return $values;
     }
 
+    /**
+     * @return array|null
+     */
     public function getAllCells()
     {
         return $this->grid;
     }
 
+    /**
+     * @return array
+     */
     public function getNonEmptyCells()
     {
         $values = array();
@@ -114,6 +272,34 @@ class Grid
             }
         }
         return $values;
+    }
+
+    /**
+     * Here we fill in the empty cells that only have one possible value left,
+     * making it easier (faster) to determine the other cells
+     */
+    private function solveSingleSolutionCells()
+    {
+        foreach ($this->getSingleSolutionCells() as $cellKey => $solution) {
+            list($column, $row, $box) = $this->getPositionFromCellKey($cellKey);
+            $this->set($cellKey, $solution);
+        }
+    }
+
+    /**
+     * @return array
+     */
+    private function getSingleSolutionCells()
+    {
+        $singleSolutionCells = array();
+        foreach ($this->grid as $cellKey => $cellValue) {
+            list($column, $row, $box) = $this->getPositionFromCellKey($cellKey);
+            $allowedValues = array_intersect($this->getAllowedColumnValues($column), $this->getAllowedRowValues($row), $this->getAllowedBoxValues($box));
+            if (count($allowedValues) == 1) {
+                $singleSolutionCells[$cellKey] = reset($allowedValues);
+            }
+        }
+        return $singleSolutionCells;
     }
 
     /**
@@ -128,28 +314,16 @@ class Grid
          */
         $randomCellKeys = array_rand($this->grid, $numberOfClues);
         foreach ($randomCellKeys as $cellKey) {
-            list($column, $row, $box) = explode("-", $cellKey);
-            if (!isset($this->allowedRowValues[$row])) {
-                $this->allowedRowValues[$row] = array(1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9);
-            }
-            if (!isset($this->allowedColumnValues[$column])) {
-                $this->allowedColumnValues[$column] = array(1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9);
-            }
-            if (!isset($this->allowedBoxValues[$box])) {
-                $this->allowedBoxValues[$box] = array(1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9);
-            }
-            $intersecting = array_intersect($this->allowedRowValues[$row], $this->allowedColumnValues[$column], $this->allowedBoxValues[$box]);
-            if (empty($intersecting)) {
+            list($column, $row, $box) = $this->getPositionFromCellKey($cellKey);
+            $allowedValues = array_intersect($this->getAllowedColumnValues($column), $this->getAllowedRowValues($row), $this->getAllowedBoxValues($box));
+            if (empty($allowedValues)) {
                 if ($attempts >= $maxAttempts) {
                     throw new \RuntimeException("Maximum amount of attempts reached before giving up (number of clues: $numberOfClues)");
                 }
                 return $this->addClues($numberOfClues, $attempts + 1, $maxAttempts);
             }
-            $randomValue = array_rand($intersecting,1);
-            unset($this->allowedRowValues[$row][$randomValue]);
-            unset($this->allowedColumnValues[$column][$randomValue]);
-            unset($this->allowedBoxValues[$box][$randomValue]);
-            $this->grid[$cellKey] = $randomValue;
+            $randomValue = array_rand($allowedValues,1);
+            $this->set($cellKey, $randomValue);
         }
     }
 
@@ -167,40 +341,6 @@ class Grid
             $this->grid[$cellKey] = null;
         }
         return $this->grid;
-    }
-
-    /**
-     * @param $row
-     * @param $column
-     * @return int
-     */
-    public static function getBoxFromRowAndColumn($row,$column) {
-        if ($row < 4) {
-            if ($column < 4) {
-                $box = 1;
-            } elseif ($column < 7) {
-                $box = 2;
-            } else {
-                $box = 3;
-            }
-        } elseif ($row < 7) {
-            if ($column < 4) {
-                $box = 4;
-            } elseif ($column < 7) {
-                $box = 5;
-            } else {
-                $box = 6;
-            }
-        } else {
-            if ($column < 4) {
-                $box = 7;
-            } elseif ($column < 7) {
-                $box = 8;
-            } else {
-                $box = 9;
-            }
-        }
-        return $box;
     }
 
     /**

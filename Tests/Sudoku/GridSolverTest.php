@@ -10,6 +10,7 @@
 namespace Cleentfaar\Bundle\SudokuBundle\Tests\Sudoku;
 
 use Cleentfaar\Bundle\SudokuBundle\Sudoku\Grid;
+use Cleentfaar\Bundle\SudokuBundle\Sudoku\GridGenerator;
 use Cleentfaar\Bundle\SudokuBundle\Sudoku\GridSolver;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -21,10 +22,13 @@ class GridSolverTest extends WebTestCase
 {
     public function testSolve()
     {
-        $grid = new Grid();
-        $grid->addClues(70);
-        $gridSolver = new GridSolver($grid);
-        $solvedGrid = $gridSolver->solve();
+
+        $gridInput = GridGenerator::generate(17);
+        $grid = new Grid($gridInput->toArray());
+
+        $solver = new GridSolver($grid);
+        $solvedGrid = $solver->solve();
+
         $this->assertTrue($solvedGrid instanceof Grid);
     }
 }

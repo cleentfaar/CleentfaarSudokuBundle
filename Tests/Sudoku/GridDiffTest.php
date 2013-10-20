@@ -27,7 +27,6 @@ class GridDiffTest extends WebTestCase
 
         $gridDiff = new GridDiff($grid1, $grid2);
         $changedValues = $gridDiff->getChangedValues();
-        var_dump($changedValues);
         $this->assertEquals(17, count($changedValues));
     }
 }

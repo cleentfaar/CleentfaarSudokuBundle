@@ -11,6 +11,7 @@ namespace Cleentfaar\Bundle\SudokuBundle\Controller;
 
 use Cleentfaar\Bundle\SudokuBundle\Sudoku\Grid;
 use Cleentfaar\Bundle\SudokuBundle\Sudoku\GridDiff;
+use Cleentfaar\Bundle\SudokuBundle\Sudoku\GridGenerator;
 use Cleentfaar\Bundle\SudokuBundle\Sudoku\GridSolver;
 use Cleentfaar\Bundle\SudokuBundle\Sudoku\GridStyler;
 use Cleentfaar\Bundle\SudokuBundle\Sudoku\Solver;
@@ -31,12 +32,26 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param int $numberOfClues
+     * @return mixed
+     */
+    public function generateAction($numberOfClues = 17)
+    {
+        $grid = GridGenerator::generate($numberOfClues);
+
+        $styler = new GridStyler();
+        $boxColors = $styler->generateBoxColors();
+
+        return $this->render('CleentfaarSudokuBundle:Default:index.html.twig',array('grid'=>$grid->toArray(),'boxColors'=>$boxColors));
+    }
+
+    /**
      * @return mixed
      */
     public function solveAction()
     {
         $gridInput = $this->getRequest()->get('grid');
-        $grid = new Grid($gridInput);
+        $grid = GridGenerator::generateFromArray($gridInput);
 
         $solver = new GridSolver($grid);
         $solvedGrid = $solver->solve();
@@ -47,21 +62,6 @@ class DefaultController extends Controller
         $styler = new GridStyler();
         $boxColors = $styler->generateBoxColors();
 
-        return $this->render('CleentfaarSudokuBundle:Default:index.html.twig',array('grid'=>$solvedGrid,'solvedCellKeys'=>$solvedCellKeys,'boxColors'=>$boxColors));
-    }
-
-    /**
-     * @param int $numberOfClues
-     * @return mixed
-     */
-    public function generateAction($numberOfClues = 17)
-    {
-        $grid = new Grid();
-        $grid->addClues($numberOfClues);
-
-        $styler = new GridStyler();
-        $boxColors = $styler->generateBoxColors();
-
-        return $this->render('CleentfaarSudokuBundle:Default:index.html.twig',array('grid'=>$grid->toArray(),'boxColors'=>$boxColors));
+        return $this->render('CleentfaarSudokuBundle:Default:index.html.twig',array('grid'=>$solvedGrid->toArray(),'solvedCellKeys'=>$solvedCellKeys,'boxColors'=>$boxColors));
     }
 }
