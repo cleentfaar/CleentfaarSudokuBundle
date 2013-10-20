@@ -18,7 +18,7 @@
         "symfony/assetic-bundle": "2.3.*",
         "cleentfaar/jquery-bundle": "2.*",
         "cleentfaar/bootstrap-bundle": "3.*",
-        "cleentfaar/select2-bundle": "3.4.3"
+        "cleentfaar/select2-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Cleentfaar\\Bundle\\SudokuBundle": "" }
