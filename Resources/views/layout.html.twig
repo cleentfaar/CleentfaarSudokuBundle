@@ -7,7 +7,7 @@
         <meta content="{% block meta_description %}{{ block('title') }}{% endblock %}" name="description">
         <title>{% block title %}Sudoku{% endblock %}</title>
         {% block stylesheets %}
-            {% stylesheets 'bundles/cleentfaarsudoku/libs/bootstrap/css/bootstrap.min.css' filter='cssrewrite' %}
+            {% stylesheets 'bundles/cleentfaarbootstrap/bootstrap/dist/css/bootstrap.min.css' filter='cssrewrite' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
         {% endblock %}
@@ -47,7 +47,7 @@
         {% block javascripts %}
             {% javascripts
             '@CleentfaarJqueryBundle/Resources/public/jquery/jquery.min.js'
-            '@CleentfaarSudokuBundle/Resources/public/libs/bootstrap/js/bootstrap.min.js'
+            '@CleentfaarBootstrapBundle/Resources/public/bootstrap/dist/js/bootstrap.min.js'
             %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
