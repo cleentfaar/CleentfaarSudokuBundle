@@ -45,46 +45,11 @@
             $grid = generateTable();
             $element.html($grid);
             fillPossibleValues();
-            createActions();
             bindTriggers();
             checkGrid();
             if (plugin.settings.debug == true) {
                 writeLog('Successfully initiated grid!');
             }
-        }
-
-        var createActions = function ()
-        {
-            var $actionsContainer = $(plugin.settings.actionsContainer);
-            if ($actionsContainer.length !== 1) {
-                writeLog("Action container does not exist, creating one after the base element");
-                $actionsContainer = $('<div id="'+plugin.settings.actionsContainer+'" class="sudoku-actions"></div>');
-                $element.after($actionsContainer);
-            }
-            for (var x = 0; x < plugin.settings.actions.length; x++){
-                var action = plugin.settings.actions[x];
-                createAction($actionsContainer, action);
-            }
-        }
-
-        var getUrlForAction = function (action)
-        {
-            if (plugin.settings.onCreateActionUrl) {
-                return plugin.settings.onCreateActionUrl(action);
-            }
-            return "/sudoku/"+action;
-        }
-
-        var createAction = function ($containerElement, action)
-        {
-            if (plugin.settings.onCreateAction) {
-                plugin.settings.onCreateAction($containerElement, action);
-            } else {
-                var actionUrl = getUrlForAction(action);
-                var actionHtml = '<a class="btn" href="'+actionUrl+'">'+action+'</a>';
-                $containerElement.append(actionHtml);
-            }
-            writeLog("Created action with name "+action);
         }
 
         /**
@@ -144,43 +109,6 @@
             writeLog("Used values for selector "+selector+": ");
             writeLog(values);
             return values;
-        }
-
-        /**
-         * Finds the intersection of
-         * two arrays in a simple fashion.
-         *
-         * PARAMS
-         *  a - first array, must already be sorted
-         *  b - second array, must already be sorted
-         *
-         * NOTES
-         *
-         *  Should have O(n) operations, where n is
-         *    n = MIN(a.length(), b.length())
-         *
-         * @param a
-         * @param b
-         * @returns {Array}
-         */
-        var arrayIntersect = function (a, b)
-        {
-            var ai=0, bi=0;
-            var result = new Array();
-
-            while( ai < a.length && bi < b.length )
-            {
-                if      (a[ai] < b[bi] ){ ai++; }
-                else if (a[ai] > b[bi] ){ bi++; }
-                else /* they're equal */
-                {
-                    result.push(a[ai]);
-                    ai++;
-                    bi++;
-                }
-            }
-
-            return result;
         }
 
         /**
