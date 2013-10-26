@@ -9,7 +9,27 @@
     <div id="SudokuContainer">
         <div class="row" id="content-wrapper">
             <form action="{{ path('cleentfaar_sudoku_solve') }}" method="post" id="SudokuForm">
-                <div class="col-xs-12" id="SudokuGrid"></div>
+                <table id="SudokuGrid" class="sudoku-grid">
+                    <tbody>
+                        {% for rowNumber in 1..9 %}
+                        <tr>
+                            {% for columnNumber in 1..9 %}
+                                {% set boxNumber = mappedBoxes[rowNumber~'-'~columnNumber] %}
+                                {% set cellKey = rowNumber~'-'~columnNumber~'-'~boxNumber %}
+                                {% set cellValue = grid[cellKey] %}
+                                <td class="cell row-{{ rowNumber }} column-{{ columnNumber }} box-{{ boxNumber }}" data-row="{{ rowNumber }}" data-column="{{ columnNumber }}" data-box="{{ boxNumber }}" data-cellKey="{{ cellKey }}" id="Cell{{ cellKey }}">
+                                    <select name="grid[{{ cellKey }}]">
+                                        <option value=""></option>
+                                        {% for value in 1..9 %}
+                                            <option value="{{ value }}"{% if value == cellValue %} selected="selected"{% endif %}>{{ value }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
                 <div class="sudoku-actions">
                     <a class="btn sudoku-action" id="GenerateGrid" href="{{ path('cleentfaar_sudoku_generate') }}/">{{ 'Generate new grid'|trans() }}</a>
                     <select name="number_of_clues" id="NumberOfClues">

@@ -1,54 +1,56 @@
 #content {
 }
-.sudoku {
+.sudoku-grid {
     margin:auto;
+    width:500px;
+    height:400px;
 }
-.sudoku .box {
+.sudoku-grid .box {
     border:1px solid black;
     margin-bottom:30px;
 }
-.sudoku .box-1,
-.sudoku .box-1 .select2-choice {
+.sudoku-grid .box-1,
+.sudoku-grid .box-1 .select2-choice {
     background-color:#777777;
     color:white;
 }
-.sudoku .box-2,
-.sudoku .box-2 .select2-choice {
+.sudoku-grid .box-2,
+.sudoku-grid .box-2 .select2-choice {
     background-color:#888888;
     color:white;
 }
-.sudoku .box-3,
-.sudoku .box-3 .select2-choice {
+.sudoku-grid .box-3,
+.sudoku-grid .box-3 .select2-choice {
     background-color:#999999;
     color:white;
 }
-.sudoku .box-4,
-.sudoku .box-4 .select2-choice {
+.sudoku-grid .box-4,
+.sudoku-grid .box-4 .select2-choice {
     background-color:#AAAAAA;
     color:white;
 }
-.sudoku .box-5,
-.sudoku .box-5 .select2-choice {
+.sudoku-grid .box-5,
+.sudoku-grid .box-5 .select2-choice {
     background-color:#BBBBBB;
     color:white;
 }
-.sudoku .box-6,
-.sudoku .box-6 .select2-choice {
+.sudoku-grid .box-6,
+.sudoku-grid .box-6 .select2-choice {
     background-color:#CCCCCC;
 }
-.sudoku .box-7,
-.sudoku .box-7 .select2-choice {
+.sudoku-grid .box-7,
+.sudoku-grid .box-7 .select2-choice {
     background-color:#DDDDDD;
 }
-.sudoku .box-8,
-.sudoku .box-8 .select2-choice {
+.sudoku-grid .box-8,
+.sudoku-grid .box-8 .select2-choice {
     background-color:#EEEEEE;
 }
-.sudoku .box-9,
-.sudoku .box-9 .select2-choice {
+.sudoku-grid .box-9,
+.sudoku-grid .box-9 .select2-choice {
     background-color:#FFFFFF;
 }
-.sudoku .possible-values {
+.sudoku-grid .possible-values {
     font-size:9px;
     width:40px;
     height:30px;
@@ -58,49 +60,51 @@
     padding:2px;
     background-color:white;
 }
-.sudoku .possible-values .possible-value {
+.sudoku-grid .possible-values .possible-value {
     color:black;
 }
-.sudoku .possible-values .possible-value.disabled {
+.sudoku-grid .possible-values .possible-value.disabled {
     color:#AAAAAA;
     text-decoration: line-through;
 }
-.sudoku .cell {
+.sudoku-grid .cell {
     border:1px dotted black;
     font-size:20px;
     width:60px;
     height:60px;
 }
-.sudoku .cell.warning,
-.sudoku .cell.warning .select2-choice  {
+.sudoku-grid .cell.warning,
+.sudoku-grid .cell.warning .select2-choice  {
     background-color:red;
     color:black;
 }
-.sudoku .cell .input {
+.sudoku-grid .cell .input {
     margin-top:3px;
 }
-.sudoku .clue {
+.sudoku-grid .clue {
     background-color:yellow;
     color:black;
 }
-.sudoku .solved {
+.sudoku-grid .solved {
     background-color:#009933;
     color:white;
     cursor: pointer;
 }
-.sudoku .input.solved {
+.sudoku-grid .input.solved {
     background-color:purple;
 }
-.sudoku .select2-container .select2-choice .select2-arrow {
+.sudoku-grid .select2-container .select2-choice .select2-arrow {
     background: none;
     border:none;
 }
-.sudoku .select2-container .select2-choice {
+.sudoku-grid .select2-container .select2-choice {
     background:none;
     border:none;
 }
 .sudoku-actions {
     margin:auto;
+    width:500px;
+    text-align:center;
 }
 .sudoku-log {
     overflow-y: scroll;
@@ -110,11 +114,11 @@
     box-shadow: none;
 }
 /*
-.sudoku .cell .input {
+.sudoku-grid .cell .input {
     float:left;
     padding-left:0px;
 }
-.sudoku .cell .input {
+.sudoku-grid .cell .input {
     font-size:30px;
     width:50px;
     text-align:center;
@@ -129,7 +133,7 @@
 .select2-container .select2-choice .select2-arrow {
     background: none;
 }
-.sudoku .cell .possible-values {
+.sudoku-grid .cell .possible-values {
     font-size:9px;
     float:right;
     width:40px;
@@ -139,10 +143,10 @@
     padding:2px;
     background-color:white;
 }
-.sudoku .cell .possible-values .possible-value {
+.sudoku-grid .cell .possible-values .possible-value {
 
 }
-.sudoku .cell .possible-values .possible-value.disabled {
+.sudoku-grid .cell .possible-values .possible-value.disabled {
     color:#AAAAAA;
     text-decoration: line-through;
 }

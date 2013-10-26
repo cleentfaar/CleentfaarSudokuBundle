@@ -26,6 +26,7 @@
             setup: {},
             debug: false,
             log: null,
+            inputSelector: "select",
             onCreateActionUrl: null,
             actionsContainer: "#SudokuActions",
             actions: ["solve", "generate", "hint", "zoom"],
@@ -38,18 +39,17 @@
 
         plugin.init = function () {
             plugin.settings = $.extend({}, defaults, options);
-            clearLog();
-            if (plugin.settings.debug == true) {
-                writeLog('Initiating grid...');
+            writeLog('Initiating grid...');
+            if (plugin.settings.setup === null) {
+                $grid = generateTable();
+                $element.html($grid);
+            } else {
+                $grid = $element;
             }
-            $grid = generateTable();
-            $element.html($grid);
             fillPossibleValues();
             bindTriggers();
             checkGrid();
-            if (plugin.settings.debug == true) {
-                writeLog('Successfully initiated grid!');
-            }
+            writeLog('Successfully initiated grid!');
         }
 
         /**
@@ -65,9 +65,7 @@
                 var valuesString = '<span class="possible-value">'+possibleValues.join('</span>, <span class="possible-value">')+'</span>';
                 $(this).append(valuesString);
             });
-            if (plugin.settings.debug == true) {
-                writeLog('Successfully filled possible values for all cells');
-            }
+            writeLog('Successfully filled possible values for all cells');
         }
 
         /**
@@ -78,8 +76,8 @@
         var getPossibleValuesForCell = function (cellKey)
         {
             var parts = cellKey.split('-');
-            var columnValues = getValuesBySelector('.column-'+parts[0]+' .input');
-            var rowValues = getValuesBySelector('.row-'+parts[1]+' .input');
+            var rowValues = getValuesBySelector('.row-'+parts[0]+' .input');
+            var columnValues = getValuesBySelector('.column-'+parts[1]+' .input');
             var boxValues = getValuesBySelector('.box-'+parts[2]+' .input');
             var possibleValues = [];
             for (var x = 1; x <= 9; x++) {
@@ -89,8 +87,6 @@
                     possibleValues.push(x);
                 }
             }
-            //writeLog("Possible values for cellkey "+cellKey+": ");
-            //writeLog(possibleValues);
             return possibleValues;
         }
 
@@ -139,11 +135,13 @@
         }
 
         var writeLog = function (message) {
-            if (plugin.settings.log !== null) {
-                $(plugin.settings.log).append('<div class="entry">'+message+'</div>');
-                $(plugin.settings.log)[0].scrollTop = $(plugin.settings.log)[0].scrollHeight;
-            } else {
-                console.log(message);
+            if (plugin.settings.debug == true) {
+                if (plugin.settings.log !== null) {
+                    $(plugin.settings.log).append('<div class="entry">'+message+'</div>');
+                    $(plugin.settings.log)[0].scrollTop = $(plugin.settings.log)[0].scrollHeight;
+                } else {
+                    console.log(message);
+                }
             }
         }
 
@@ -215,9 +213,7 @@
         var cleanGrid = function ()
         {
             $(".warning", $grid).removeClass('warning');
-            if (plugin.settings.debug == true) {
-                writeLog('Successfully cleaned the grid (removed warnings)');
-            }
+            writeLog('Successfully cleaned the grid (removed warnings)');
         }
 
         /**
@@ -230,10 +226,8 @@
          */
         var checkGrid = function ()
         {
-            if (plugin.settings.debug == true) {
-                writeLog('&nbsp;');
-                writeLog('Checking grid...');
-            }
+            writeLog('&nbsp;');
+            writeLog('Checking grid...');
             cleanGrid();
             var conflictingRowCells = getConflictingRowCells();
             var conflictingColumnCells = getConflictingColumnCells();
@@ -246,9 +240,7 @@
                     conflicts.push(inputName);
                 }
             }
-            if (plugin.settings.debug == true) {
-                writeLog('Conflicting cells found in columns: '+conflictingColumnCells.length);
-            }
+            writeLog('Conflicting cells found in columns: '+conflictingColumnCells.length);
             for (var x = 0; x < conflictingRowCells.length; x++) {
                 conflictingRowCells[x].addClass('warning');
                 var inputName = conflictingRowCells[x].find('select').attr('name');
@@ -256,9 +248,7 @@
                     conflicts.push(inputName);
                 }
             }
-            if (plugin.settings.debug == true) {
-                writeLog('Conflicting cells found in rows: '+conflictingRowCells.length);
-            }
+            writeLog('Conflicting cells found in rows: '+conflictingRowCells.length);
             for (var x = 0; x < conflictingBoxCells.length; x++) {
                 conflictingBoxCells[x].addClass('warning');
                 var inputName = conflictingBoxCells[x].find('select').attr('name');
@@ -266,10 +256,8 @@
                     conflicts.push(inputName);
                 }
             }
-            if (plugin.settings.debug == true) {
-                writeLog('Conflicting cells found in boxes: '+conflictingBoxCells.length);
-                writeLog('Grid checks have finished...');
-            }
+            writeLog('Conflicting cells found in boxes: '+conflictingBoxCells.length);
+            writeLog('Grid checks have finished...');
             return conflicts;
         }
 
@@ -290,15 +278,13 @@
             /**
              * Trigger for changing a value in the grid
              */
-            $(".input", $element).change(function() {
+            $(plugin.settings.inputSelector, $element).change(function() {
                 var cellKey = $(this).attr('id');
                 var value = $(this).val();
                 disablePossibleValue(cellKey, value);
                 checkGrid();
             });
-            if (plugin.settings.debug == true) {
-                writeLog('Successfully bound triggers to elements');
-            }
+            writeLog('Successfully bound triggers to elements');
         }
 
         /**

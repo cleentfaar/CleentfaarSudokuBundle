@@ -42,7 +42,7 @@ class DefaultController extends Controller
         $styler = new GridStyler();
         $boxColors = $styler->generateBoxColors();
 
-        return $this->render('CleentfaarSudokuBundle:Default:index.html.twig',array('grid'=>$grid->toArray(),'boxColors'=>$boxColors));
+        return $this->render('CleentfaarSudokuBundle:Default:index.html.twig',array('grid'=>$grid->toArray(),'boxColors'=>$boxColors, 'mappedBoxes'=>$grid->getMappedBoxes()));
     }
 
     /**
@@ -58,10 +58,11 @@ class DefaultController extends Controller
 
         $diff = new GridDiff($grid, $solvedGrid);
         $solvedCellKeys = $diff->getChangedValues();
+        var_dump($solvedGrid);
 
         $styler = new GridStyler();
         $boxColors = $styler->generateBoxColors();
 
-        return $this->render('CleentfaarSudokuBundle:Default:index.html.twig',array('grid'=>$solvedGrid->toArray(),'solvedCellKeys'=>$solvedCellKeys,'boxColors'=>$boxColors));
+        return $this->render('CleentfaarSudokuBundle:Default:index.html.twig',array('grid'=>$solvedGrid->toArray(),'solvedCellKeys'=>$solvedCellKeys, 'mappedBoxes'=>$grid->getMappedBoxes(),'boxColors'=>$boxColors));
     }
 }
